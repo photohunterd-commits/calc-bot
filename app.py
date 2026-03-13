@@ -26,16 +26,13 @@ def calc(expr):
     tree = ast.parse(expr, mode="eval")
     return eval_expr(tree.body)
 
-@app.route("/", methods=["GET"])
-def home():
-    return "bot running"
-
 @app.route("/webhook", methods=["POST"])
 def webhook():
 
     data = request.json
-    text = data["message"]["text"]
-    chat_id = data["chat_id"]
+
+    text = data["payload"]["message"]["text"]
+    chat_id = data["payload"]["message"]["chat_id"]
 
     if text.strip().endswith("="):
 
